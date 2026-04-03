@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- This page generated in part by Claude Code -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jake Welde</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Syne:wght@300;400;500&family=DM+Sans:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --ink:    #111110;
+      --muted:  #666660;
+      --faint:  #999893;
+      --rule:   #e0dfd9;
+      --bg:     #f8f6f0;
+      /* --bg:     #f6f5f2; */
+      --accent: #1a1a1a;
+    }
+
+    html {
+      font-size: 16px;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+    }
+
+    /* ── Overall canvas ── */
+    .canvas {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 9vw 5vw 12vw;
+    }
+
+    /* ── Index number / label ── */
+    .index-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      color: var(--faint);
+      text-transform: uppercase;
+      margin-bottom: 10vw;
+    }
+
+    /* ── Name block ── */
+    .name-block {
+      margin-bottom: 6vw;
+    }
+
+    .name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 300;
+      font-size: clamp(2.3rem, 5.5vw, 3.8rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+
+    .name em {
+      font-style: normal;
+      color: var(--faint);
+    }
+
+    /* ── Photo + role strip ── */
+    .photo-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-bottom: 9vw;
+      align-items: end;
+    }
+
+    .photo-wrap {
+      position: relative;
+    }
+
+    .photo-frame {
+      width: 100%;
+      aspect-ratio: 4 / 4;
+      background: var(--rule);
+      overflow: hidden;
+      max-width: 320px;
+    }
+
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      /* filter: grayscale(10%) contrast(1.04); */
+      filter: grayscale(50%) contrast(.9);
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      background: #dddbd5;
+    }
+
+    .photo-placeholder svg {
+      width: 60%;
+      opacity: 0.35;
+    }
+
+    /* Caption under photo */
+    .photo-caption {
+      margin-top: 0.9rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    /* Right column of photo strip */
+    .role-block {
+      padding-left: 10%;
+      padding-bottom: 0.5rem;
+      /* background-color: red; */
+      padding-bottom: 0;
+    }
+
+    .role-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 400;
+      font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+      letter-spacing: 0.01em;
+      /* line-height: 1.6; */
+      color: var(--muted);
+    }
+
+
+    .role-title strong {
+      display: block;
+      font-family: 'Syne', sans-serif;
+      font-weight: 500;
+      font-size: clamp(1rem, 1.8vw, 1.3rem);
+      color: var(--ink);
+      letter-spacing: -0.01em;
+      margin-bottom: 0.4rem;
+    }
+
+    .role-title span {
+      letter-spacing: -0.01em;
+      font-family: 'DM Sans', system-ui, sans-serif;
+      padding-bottom: .4rem;
+      display: block;
+    }
+
+    .prefix {
+      margin-bottom: .5rem;
+    }
+
+    .role-divider {
+      width: 24px;
+      height: 1px;
+      background: var(--ink);
+      margin: 1.6rem 0;
+    }
+
+    .affiliation {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.015em;
+      color: var(--muted);
+      text-decoration: none;
+      line-height: 1.7;
+    }
+
+    .affiliation strong {
+      font-weight: 550;
+      color: var(--ink);
+    }
+
+    /* ── Bio section ── */
+    .bio-section {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 0 8%;
+      margin-bottom: 9vw;
+      align-items: start;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--faint);
+      padding-top: 0.35rem;
+    }
+
+    .bio-text p {
+      font-size: 1.0rem;
+      line-height: 1.82;
+      color: var(--ink);
+      font-weight: 300;
+      margin-bottom: 1.3em;
+      text-align: justify;
+    }
+
+    .bio-text p:last-child { margin-bottom: 0; }
+
+    /* ── Contact section ── */
+    .contact-section {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 0 8%;
+      align-items: start;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+    }
+
+    .contact-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.05em;
+      color: var(--muted);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      width: fit-content;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .contact-links a:hover {
+      color: var(--ink);
+      border-bottom-color: var(--ink);
+    }
+
+    /* ── Footer ── */
+    .footer-rule {
+      border: none;
+      border-top: 1px solid var(--rule);
+      margin: 8vw 0 .75rem;
+    }
+
+    footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    footer span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.63rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--faint);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 600px) {
+      .photo-strip {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+
+      .photo-frame { max-width: 200px; }
+
+      .role-block { padding-left: 0; }
+
+      .bio-section,
+      .contact-section {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="canvas">
+
+    <!-- <p class="index-label">Faculty &nbsp;/&nbsp; 001</p> -->
+
+    <!-- Name -->
+    <div class="name-block">
+      <h1 class="name">
+        Jake Welde<em>.</em>
+      </h1>
+    </div>
+
+    <!-- Photo + Role -->
+    <div class="photo-strip">
+      <div class="photo-wrap">
+        <div class="photo-frame">
+            <!-- <img src="falls.jpg" alt="Jake Welde" /> -->
+            <img src="bubbles.jpg" alt="Jake Welde" />
+        </div>
+      </div>
+
+      <div class="role-block">
+
+        <p class="role-title">
+          <strong>Assistant Professor</strong>
+          <span class="department">Sibley School of Mechanical <br>and Aerospace Engineering</span> 
+          <span class="university">Cornell University</span>
+        </p>
+        <br>
+        <br>
+
+        <p class="section-label prefix">
+          graduate field memberships
+        </p>
+        <p class="affiliation">
+          ·<span style="padding-left: 3px;"></span>Mechanical Engineering
+          <br>
+          ·<span style="padding-left: 3px;"></span>Aerospace Engineering
+          <br>
+          ·<span style="padding-left: 3px;"></span>Theoretical and Applied Mechanics
+          <br>
+          ·<span style="padding-left: 3px;"></span>Applied Mathematics
+        </p>
+      </div>
+    </div>
+
+    <!-- Bio -->
+    <div class="bio-section">
+      <p class="section-label">Bio</p>
+      <div class="bio-text">
+        <p>
+          My research sits at the intersection of 
+          robotics, control theory, differential geometry, and design.
+          I am broadly interested in how mathematical
+          structure — symmetry, hierarchy, and mechanics — can be harnessed
+          to create more capable algorithms for robot control, and how 
+          the interplay between control and morphology 
+          mediates overall robot capabilities.
+        </p>
+        <p>
+          At Cornell, I lead
+          the 
+          <a href="https://geodesic.mae.cornell.edu" style="color:inherit; border-bottom: 1.5px solid #999; text-decoration: none;">Geometry, Design, and Control Laboratory</a> 
+          — the "GeoDesiC Lab".
+          In both our algorithmic work and our design of prototype systems, 
+          we seek to bring robots ever closer to the incredible example set by Nature.
+        </p>
+        <p>
+          Previously, I spent a decade at the University of Pennsylvania — working in 
+          the 
+          <a href="https://www.grasp.upenn.edu" style="color:inherit; border-bottom: 1.5px solid #999; text-decoration: none;">GRASP Laboratory</a>
+          — where I earned my PhD 
+          in Mechanical Engineering and Applied Mechanics in 2025.
+        </p>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="contact-section">
+      <p class="section-label">Links</p>
+      <div class="contact-links">
+        <a href="mailto:jakewelde@cornell.edu">jakewelde@cornell.edu</a>
+        <a href="https://www.duffield.cornell.edu/people/jake-welde/">department profile</a>
+        <a href="https://scholar.google.com/citations?user=u8f4WQ0AAAAJ&hl=en">google scholar</a>
+        <a href="https://geodesic.mae.cornell.edu">lab website</a>
+        <a href="https://geodesic.mae.cornell.edu/files/jake_welde_CV.pdf">cv</a>
+      </div>
+    </div>
+
+    <hr class="footer-rule" />
+
+    <footer>
+       <span></span>
+      <span>&copy; 2026</span>
+    </footer>
+
+  </div>
+</body>
+</html>
